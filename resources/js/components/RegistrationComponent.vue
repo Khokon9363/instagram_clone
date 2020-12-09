@@ -19,11 +19,11 @@
                             <div class="col-sm-5 line"></div>
                         </div>
                         <form @submit.prevent="register()" method="POST">
-                            <input type="text" v-model="email" placeholder="Mobile Number or Email" class="mb-2">
-                            <input type="text" v-model="full_name" placeholder="Full Name" class="mb-2">
-                            <input type="text" v-model="user_name" placeholder="Username" class="mb-2">
-                            <input type="text" v-model="password" placeholder="Password" class="mb-2">
-                            <button class="btn btn-info" :disabled="disabled ? false : true">Sign up</button>
+                            <input type="text" v-model="email" @keyup="formValidation()" placeholder="Mobile Number or Email" class="mb-2">
+                            <input type="text" v-model="full_name" @keyup="formValidation()" placeholder="Full Name" class="mb-2">
+                            <input type="text" v-model="user_name" @keyup="formValidation()" placeholder="Username" class="mb-2">
+                            <input type="text" v-model="password" @keyup="formValidation()" placeholder="Password" class="mb-2">
+                            <button class="btn btn-info" :disabled="disabled ? true : false">Sign up</button>
                         </form>
                         <div class="row mt-0">
                             <div class="mt-3 text-center">
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import router from "../routes";
     export default {
         data(){
             return{
@@ -55,7 +56,7 @@
                 full_name : null,
                 user_name : null,
                 password : null,
-                disabled : false,
+                disabled : true,
             }
         },
         mounted() {
@@ -63,6 +64,34 @@
         methods:{
             register(){
                 
+            },
+            formValidation(){
+                if(this.email != null && this.full_name != null && this.user_name != null && this.password != null && this.email != '' && this.full_name != '' && this.user_name != '' && this.password != ''){
+                    this.disabled = false
+                }else{
+                    this.disabled = true
+                }
+            },
+            register(){
+                axios.post('register',{
+                    email : this.email,
+                    full_name : this.full_name,
+                    user_name : this.user_name,
+                    password : this.password
+                })
+                .then(response =>{
+                    this.email = null
+                    this.full_name = null
+                    this.user_name = null
+                    this.password = null
+                    if(response.status === 200){
+                        alert('Welcome dear !');
+                        this.$router.push('/')
+                    }
+                })
+                .catch(error =>{
+                    console.log(error)
+                })
             }
         }
     }

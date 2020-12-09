@@ -2249,6 +2249,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../routes */ "./resources/js/routes.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2298,6 +2301,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2305,13 +2309,42 @@ __webpack_require__.r(__webpack_exports__);
       full_name: null,
       user_name: null,
       password: null,
-      disabled: false
+      disabled: true
     };
   },
   mounted: function mounted() {},
-  methods: {
-    register: function register() {}
-  }
+  methods: _defineProperty({
+    register: function register() {},
+    formValidation: function formValidation() {
+      if (this.email != null && this.full_name != null && this.user_name != null && this.password != null && this.email != '' && this.full_name != '' && this.user_name != '' && this.password != '') {
+        this.disabled = false;
+      } else {
+        this.disabled = true;
+      }
+    }
+  }, "register", function register() {
+    var _this = this;
+
+    axios.post('register', {
+      email: this.email,
+      full_name: this.full_name,
+      user_name: this.user_name,
+      password: this.password
+    }).then(function (response) {
+      _this.email = null;
+      _this.full_name = null;
+      _this.user_name = null;
+      _this.password = null;
+
+      if (response.status === 200) {
+        alert('Welcome dear !');
+
+        _this.$router.push('/');
+      }
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  })
 });
 
 /***/ }),
@@ -39506,6 +39539,9 @@ var render = function() {
                   },
                   domProps: { value: _vm.email },
                   on: {
+                    keyup: function($event) {
+                      return _vm.formValidation()
+                    },
                     input: function($event) {
                       if ($event.target.composing) {
                         return
@@ -39528,6 +39564,9 @@ var render = function() {
                   attrs: { type: "text", placeholder: "Full Name" },
                   domProps: { value: _vm.full_name },
                   on: {
+                    keyup: function($event) {
+                      return _vm.formValidation()
+                    },
                     input: function($event) {
                       if ($event.target.composing) {
                         return
@@ -39550,6 +39589,9 @@ var render = function() {
                   attrs: { type: "text", placeholder: "Username" },
                   domProps: { value: _vm.user_name },
                   on: {
+                    keyup: function($event) {
+                      return _vm.formValidation()
+                    },
                     input: function($event) {
                       if ($event.target.composing) {
                         return
@@ -39572,6 +39614,9 @@ var render = function() {
                   attrs: { type: "text", placeholder: "Password" },
                   domProps: { value: _vm.password },
                   on: {
+                    keyup: function($event) {
+                      return _vm.formValidation()
+                    },
                     input: function($event) {
                       if ($event.target.composing) {
                         return
@@ -39585,7 +39630,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-info",
-                    attrs: { disabled: _vm.disabled ? false : true }
+                    attrs: { disabled: _vm.disabled ? true : false }
                   },
                   [_vm._v("Sign up")]
                 )
@@ -55611,8 +55656,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\xampp\htdocs\instagram\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! E:\xampp\htdocs\instagram\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\xampp\htdocs\instagram_clone\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\xampp\htdocs\instagram_clone\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

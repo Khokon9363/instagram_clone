@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class UserMiddleware
+class noLoggedIn
 {
     /**
      * Handle an incoming request.
@@ -15,9 +15,9 @@ class UserMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(session('id')){
+        if(!session('id')){
             return $next($request);
         }
-        return redirect('login');
+        return redirect('/');
     }
 }
